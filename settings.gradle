@@ -1,0 +1,2 @@
+rootProject.name = "Task5_MVVM"
+include ':app'
