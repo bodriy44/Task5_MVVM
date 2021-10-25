@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Note</string>
+    <string name="about_info">This application was developed as part of the Android Studio Application Development course</string>
+    <string name="fragment_note_title">Header</string>
+    <string name="fragment_note_date">Date</string>
+    <string name="fragment_note_text">Text</string>
+    <string name="fragment_note_create_save">Save</string>
+    <string name="my_note">MyNote</string>
+    <string name="about_dialog_info">Information</string>
+    <string name="about_dialog_message">Go to the app information page?</string>
+    <string name="about_dialog_neg_but">No</string>
+    <string name="about_dialog_pos_but">Yes</string>
+    <string name="about_dialog_exception">Activity cannot be null</string>
+</resources>
