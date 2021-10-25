@@ -12,45 +12,46 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.adapter.PagerAdapter
+import com.example.task5_mvvm.databinding.FragmentNoteBinding
 import com.example.task5_mvvm.model.Note
-import com.example.task5_mvvm.model.database.AppDatabase
 import com.example.task5_mvvm.view.NoteView
 import com.example.task5_mvvm.viewmodel.MainViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
-class NoteFragment(var db: AppDatabase, var vm: MainViewModel) : Fragment(R.layout.fragment_note), NoteView {
+class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), NoteView {
     lateinit var note: Note
     private lateinit var adapter: PagerAdapter
     private lateinit var viewPager: ViewPager2
+    private lateinit var binding: FragmentNoteBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_note, container, false)
+    ): View {
+        binding = FragmentNoteBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
-        requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButtonDelete).setOnClickListener { v: View? ->
+        binding.floatingActionButtonDelete.setOnClickListener { v: View? ->
             deleteNote(
-                vm.getNotes()!!.get((viewPager.currentItem + adapter.position2) % adapter.size)
+                vm.getNotes()[(viewPager.currentItem + adapter.position2) % adapter.size]
             )
         }
-        requireActivity().findViewById<FloatingActionButton>(R.id.floatingActionButtonShare).setOnClickListener { v: View? -> shareNote() }
+        binding.floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
 
-        adapter = PagerAdapter(this, vm.getIndexNote(note), vm.getSize(),  vm.getNotes() as MutableList<Note>)
-        viewPager = requireActivity().findViewById(R.id.pager)
+        adapter = PagerAdapter(this, vm.getIndexNote(note), vm.getSize(),  vm.getNotes())
+        viewPager = binding.pager
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun shareNote() {
-        val note = vm.getNotes()!!.get((viewPager.currentItem + adapter.position2) % adapter.size)
+        val note = vm.getNotes()[(viewPager.currentItem + adapter.position2) % adapter.size]
         val sendIntent = Intent()
         with(sendIntent) {
             action = Intent.ACTION_SEND

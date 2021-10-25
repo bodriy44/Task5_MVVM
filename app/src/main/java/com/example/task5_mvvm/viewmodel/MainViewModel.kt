@@ -15,7 +15,6 @@ class MainViewModel(database: AppDatabase): ViewModel() {
     private var model = MainModel(database)
     var noteCount: LiveData<Int> = _noteCount
     var notes: LiveData<ArrayList<Note>> = _notes
-    private var _currentNote = MutableLiveData<Note>()
 
     suspend fun initVM() {
         _notes.value = ArrayList(model.getAllNotes())
@@ -25,7 +24,7 @@ class MainViewModel(database: AppDatabase): ViewModel() {
 
     fun getIndexNote(note: Note) = model.getIndexNote(note)
 
-    fun getNotes() = _notes.value
+    fun getNotes() = model.notes
 
     fun getSize() = model.getSize()
 
@@ -44,9 +43,5 @@ class MainViewModel(database: AppDatabase): ViewModel() {
 
     fun getNote(index: Int): Note{
         return model.getNote(index)
-    }
-
-    fun pageSelected(position: Int) {
-        _currentNote.value = _notes.value?.get(position)
     }
 }

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.task5_mvvm.R
+import com.example.task5_mvvm.databinding.RecyclerItemBinding
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.view.OnNoteClickListener
 import java.util.*
@@ -13,9 +13,11 @@ import java.util.*
 class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     private var notes: List<Note> = ArrayList()
+    private lateinit var binding: RecyclerItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        binding = RecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
+            binding
         )
     }
 
@@ -38,13 +40,14 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
 
     fun getNotes(): List<Note> = this.notes
 
-    class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(private val binding: RecyclerItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val dateView: TextView
         val headerView: TextView
 
         init {
-            dateView = itemView.findViewById<TextView>(R.id.date)
-            headerView = itemView.findViewById<TextView>(R.id.title)
+            dateView = binding.date
+            headerView = binding.title
         }
     }
 }

@@ -1,32 +1,31 @@
 package com.example.task5_mvvm.view.fragment
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.task5_mvvm.R
+import com.example.task5_mvvm.databinding.FragmentNoteCreateBinding
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.view.MainActivity
-import com.example.task5_mvvm.view.NoteCreateView
-import java.util.*
 
 class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.task5_mvvm.view.NoteCreateView {
-
-    // Создаем view который будет содержимым фрагмента и отдаем его системе
+    private lateinit var binding: FragmentNoteCreateBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_note_create, container, false)
+    ): View {
+        binding = FragmentNoteCreateBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        view?.findViewById<View>(R.id.saveButton)?.setOnClickListener { v: View? -> addNote() }
-        view?.findViewById<EditText>(R.id.editTextTitle)?.setText("")
-        view?.findViewById<EditText>(R.id.editTextText)?.setText("")
+        binding.saveButton.setOnClickListener { v: View? -> addNote() }
+        binding.editTextTitle.setText("")
+        binding.editTextText.setText("")
     }
 
     override fun addNote() {
@@ -35,8 +34,8 @@ class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.
 
     val note: Note
         get() = Note(
-            view?.findViewById<EditText>(R.id.editTextTitle)?.text.toString(),
-            view?.findViewById<EditText>(R.id.editTextText)?.text.toString(),
-            Date().toString()
+            binding.editTextTitle.text.toString(),
+            binding.editTextText.text.toString(),
+            DateFormat.getDateFormat(context).toString(),
         )
 }

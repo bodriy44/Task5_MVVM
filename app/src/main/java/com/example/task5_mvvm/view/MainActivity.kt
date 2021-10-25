@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.task5_mvvm.R
+import com.example.task5_mvvm.databinding.ActivityMainBinding
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.model.database.AppDatabase
 import com.example.task5_mvvm.view.fragment.AboutDialogFragment
@@ -16,35 +17,31 @@ import com.example.task5_mvvm.viewmodel.MainViewModel
 import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
 
-
 class MainActivity : FragmentActivity(), MainView {
-
     private lateinit var vm: MainViewModel
     lateinit var recyclerViewFragment: RecyclerViewFragment
     lateinit var noteFragment: NoteFragment
     private lateinit var noteCreateFragment: NoteCreateFragment
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         vm = ViewModelProvider(this, MainViewModelFactory(AppDatabase.getDatabase(this))).get(
             MainViewModel::class.java
         )
-
         lifecycleScope.launch {
             vm.initVM()
         }
-
         noteCreateFragment = NoteCreateFragment()
-        noteFragment = NoteFragment(AppDatabase.getDatabase(this), vm)
-        setContentView(R.layout.activity_main)
-        findViewById<View>(R.id.button_about).setOnClickListener { v: View? ->
+        noteFragment = NoteFragment(vm)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.buttonAbout.setOnClickListener { v: View? ->
             val myDialogFragment = AboutDialogFragment()
             myDialogFragment.show(supportFragmentManager.beginTransaction(), "dialog")
         }
-
-        recyclerViewFragment = RecyclerViewFragment(AppDatabase.getDatabase(this), vm)
-
+        recyclerViewFragment = RecyclerViewFragment(vm)
         showRecycler()
     }
 

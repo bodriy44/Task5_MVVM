@@ -7,30 +7,28 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.adapter.NoteAdapter
+import com.example.task5_mvvm.databinding.FragmentRecyclerBinding
 import com.example.task5_mvvm.model.Note
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.example.task5_mvvm.model.database.AppDatabase
 import com.example.task5_mvvm.view.MainActivity
 import com.example.task5_mvvm.view.OnNoteClickListener
 import com.example.task5_mvvm.viewmodel.MainViewModel
 
-class RecyclerViewFragment(var db: AppDatabase, var vm: MainViewModel) :
+class RecyclerViewFragment(var vm: MainViewModel) :
     Fragment(R.layout.fragment_recycler),
     com.example.task5_mvvm.view.RecyclerView,
     OnNoteClickListener {
     lateinit var adapter: NoteAdapter
+    private lateinit var binding: FragmentRecyclerBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val inflate = inflater.inflate(R.layout.fragment_recycler, container, false)
+    ): View {
+        binding = FragmentRecyclerBinding.inflate(layoutInflater)
         adapter = NoteAdapter(this)
-        inflate.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recyclerView).adapter =
-            adapter
-        inflate.findViewById<FloatingActionButton>(R.id.floatingActionButtonAddNote)
-            .setOnClickListener { v: View? -> createNote() }
-        return inflate
+        binding.recyclerView.adapter = adapter
+        binding.floatingActionButtonAddNote.setOnClickListener { v: View? -> createNote() }
+        return binding.root
     }
 
     override fun onStart() {

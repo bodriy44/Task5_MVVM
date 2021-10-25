@@ -1,18 +1,18 @@
 <resources>
     <string name="app_name">My Note</string>
-    <string name="fragment_note">Fragment 1</string>
-    <string name="fragment_recycler">Fragment 2</string>
-    <string name="recycler_item">Fragment 3</string>
+    <string name="fragment_note" translatable="false">Fragment 1</string>
+    <string name="fragment_recycler" translatable="false">Fragment 2</string>
+    <string name="recycler_item" translatable="false">Fragment 3</string>
     <string name="about_info">Это приложение разработано в рамках курса "Разработка приложений в Android Studio"</string>
     <string name="fragment_note_title">Заголовок</string>
     <string name="fragment_note_date">Дата</string>
     <string name="fragment_note_text">Текст</string>
     <string name="fragment_note_create_save">Сохранить</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="my_note">MyNote</string>
     <string name="about_dialog_info">Информация</string>
-    <string name="about_dialog_message">Перейти на страницу информации о приложении?</string>
     <string name="about_dialog_neg_but">Нет</string>
     <string name="about_dialog_pos_but">Да</string>
     <string name="about_dialog_exception">Activity не может быть null</string>
+    <string name="about_dialog_message">Перейти на страницу информации о приложении?</string>
 </resources>

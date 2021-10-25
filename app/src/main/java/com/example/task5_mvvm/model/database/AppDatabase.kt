@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.task5_mvvm.model.Note
-import com.example.task5_mvvm.view.fragment.PagerFragment
 
 @Database(entities = [Note::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {

@@ -5,23 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.example.task5_mvvm.R
+import com.example.task5_mvvm.databinding.FragmentPagerBinding
 import com.example.task5_mvvm.model.Note
 
 class PagerFragment(var note: Note) : Fragment() {
+    private lateinit var binding: FragmentPagerBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_pager, container, false)
+    ): View {
+        binding = FragmentPagerBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        with(view) {
-            findViewById<TextView>(R.id.noteTitle).text = note.header
-            findViewById<TextView>(R.id.noteDate).text = note.date
-            findViewById<TextView>(R.id.noteText).text = note.body
-        }
+        binding.noteTitle.text = note.header
+        binding.noteDate.text = note.date
+        binding.noteText.text = note.body
     }
 }
