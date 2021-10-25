@@ -19,7 +19,6 @@ import com.example.task5_mvvm.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
 class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), NoteView {
-    lateinit var note: Note
     private lateinit var adapter: PagerAdapter
     private lateinit var viewPager: ViewPager2
     private lateinit var binding: FragmentNoteBinding
@@ -43,7 +42,7 @@ class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), No
         }
         binding.floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
 
-        adapter = PagerAdapter(this, vm.getIndexNote(note), vm.getSize(),  vm.getNotes())
+        adapter = PagerAdapter(this, vm.getIndexNote(vm.getCurrentNote()), vm.getSize(),  vm.getNotes())
         viewPager = binding.pager
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false
@@ -62,10 +61,6 @@ class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), No
             type = "text/plain"
         }
         startActivity(Intent.createChooser(sendIntent, null))
-    }
-
-    fun changeNote(note: Note) {
-        this.note = note
     }
 
     fun deleteNote(note: Note) {

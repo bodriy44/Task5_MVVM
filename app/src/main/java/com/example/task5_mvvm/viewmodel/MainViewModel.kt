@@ -12,9 +12,11 @@ class MainViewModel(database: AppDatabase): ViewModel() {
 
     private var _noteCount = MutableLiveData<Int>()
     private var _notes = MutableLiveData<ArrayList<Note>>()
+    private var _currentNote = MutableLiveData<Note>()
     private var model = MainModel(database)
     var noteCount: LiveData<Int> = _noteCount
     var notes: LiveData<ArrayList<Note>> = _notes
+    var currentNote: LiveData<Note> = _currentNote
 
     suspend fun initVM() {
         _notes.value = ArrayList(model.getAllNotes())
@@ -36,6 +38,12 @@ class MainViewModel(database: AppDatabase): ViewModel() {
             _noteCount.value = _noteCount.value?.inc()
         }
     }
+
+    fun changeNote(note: Note) {
+         _currentNote.value = note
+    }
+
+    fun getCurrentNote() = _currentNote.value!!
 
     suspend fun deleteNote(note: Note){
         model.deleteNote(note)

@@ -3,12 +3,12 @@ package com.example.task5_mvvm.model
 import com.example.task5_mvvm.model.database.AppDatabase
 import java.util.*
 
-class MainModel(var db: AppDatabase) {
+class MainModel(var db: AppDatabase): IMainModel {
     var notes: MutableList<Note>
 
     fun getIndexNote(note: Note) = notes.indexOf(note)
 
-    suspend fun deleteNote(note: Note) {
+    override suspend fun deleteNote(note: Note) {
         db.noteDao().deleteNote(note)
         notes.removeAt(notes.indexOf(note))
     }
@@ -17,15 +17,15 @@ class MainModel(var db: AppDatabase) {
 
     fun getNote(index: Int) = notes[index]
 
-    private suspend fun addNote(note: Note) {
+    override suspend fun addNote(note: Note) {
         db.noteDao().addNote(note)
     }
 
-    suspend fun addNote(title: String, text: String) {
+    override suspend fun addNote(title: String, text: String) {
         addNote(Note(title, text))
     }
 
-    suspend fun getAllNotes() = db.noteDao().getAll()
+    override suspend fun getAllNotes() = db.noteDao().getAll()
 
     init {
         notes = ArrayList()

@@ -52,7 +52,7 @@ class MainActivity : FragmentActivity(), MainView {
     }
 
     override fun showNote(note: Note) {
-        noteFragment.changeNote(note)
+        vm.changeNote(note)
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, noteFragment)
             .addToBackStack(null)
