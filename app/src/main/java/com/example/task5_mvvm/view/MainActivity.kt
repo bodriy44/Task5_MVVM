@@ -69,7 +69,7 @@ class MainActivity : FragmentActivity(), MainView {
     }
 
     fun newNote(note: Note){
-        vm.addNote(note.header, note.body)
+        vm.addNote(note)
         showRecycler()
     }
 }

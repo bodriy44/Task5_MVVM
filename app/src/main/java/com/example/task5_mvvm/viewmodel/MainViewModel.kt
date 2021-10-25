@@ -37,13 +37,13 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
 
     fun getSize() = model.getSize()
 
-    fun addNote(title: String, text: String) {
-        if (title != "null" && text != "null" && title != "" && text != "") {
+    fun addNote(note: Note) {
+        if (note.header != "null" && note.body != "null" && note.header != "" && note.body != "") {
             viewModelScope.launch {
-                model.addNote(title, text)
+                model.addNote(note.header, note.body)
             }
 
-            _notes.value?.add(Note(title, text))
+            _notes.value?.add(Note(note.header, note.body))
             _noteCount.value = _noteCount.value?.inc()
             onSuccessSaveNote.call()
         } else{
@@ -52,7 +52,7 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
     }
 
     fun changeNote(note: Note) {
-        if (note.header!="" && note.body!="" && note.header!="null" && note.body!="null") {
+        if (model.getIndexNote(note)!=-1) {
             _currentNote.value = note
             onSuccessChangeNote.call()
         }else{

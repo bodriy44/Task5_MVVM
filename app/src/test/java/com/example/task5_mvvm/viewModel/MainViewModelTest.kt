@@ -20,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito
+import java.util.*
 
 @RunWith(JUnit4::class)
 class MainViewModelTest {
@@ -44,7 +45,7 @@ class MainViewModelTest {
 
     @Test
     fun testAddEmptyNote() {
-        viewModel.addNote("", "")
+        viewModel.addNote(Note("", ""))
         var error = false
         viewModel.onSuccessSaveNote.observeForever {
             error = true
@@ -60,7 +61,7 @@ class MainViewModelTest {
 
     @Test
     fun testAddNullNote() {
-        viewModel.addNote("null", "null")
+        viewModel.addNote(Note("null", "null"))
 
         var error = false
         viewModel.onSuccessSaveNote.observeForever {
@@ -77,7 +78,7 @@ class MainViewModelTest {
 
     @Test
     fun testAddNDataNote() {
-        viewModel.addNote("Header", "Body")
+        viewModel.addNote(Note("Header", "Body"))
 
         var error = false
         viewModel.onErrorSaveNote.observeForever {
@@ -94,7 +95,9 @@ class MainViewModelTest {
 
     @Test
     fun testChangeDataNote() {
-        viewModel.changeNote(Note("Header", "Body"))
+        val note: Note = Note("Header", "Body")
+        viewModel.addNote(note)
+        viewModel.changeNote(note)
 
         var error = false
         viewModel.onErrorChangeNote.observeForever {
@@ -110,33 +113,17 @@ class MainViewModelTest {
     }
 
     @Test
-    fun testChangeNullNote() {
+    fun testChangeNonExistNote() {
         viewModel.changeNote(Note("null", "null"))
 
         var error = false
-        viewModel.onSuccessChangeNote.observeForever {
+        viewModel.onErrorChangeNote.observeForever {
             error = true
         }
         assertFalse(error)
 
         var success = false
-        viewModel.onErrorChangeNote.observeForever {
-            success = true
-        }
-        assertTrue(success)
-    }
-
-    @Test
-    fun testChangeEmptyNote() {
-        viewModel.changeNote(Note("", ""))
-        var error = false
         viewModel.onSuccessChangeNote.observeForever {
-            error = true
-        }
-        assertFalse(error)
-
-        var success = false
-        viewModel.onErrorChangeNote.observeForever {
             success = true
         }
         assertTrue(success)
