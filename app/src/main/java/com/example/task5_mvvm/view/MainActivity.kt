@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.databinding.ActivityMainBinding
+import com.example.task5_mvvm.model.IMainModel
+import com.example.task5_mvvm.model.MainModel
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.model.database.AppDatabase
 import com.example.task5_mvvm.view.fragment.AboutDialogFragment
@@ -26,7 +28,7 @@ class MainActivity : FragmentActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm = ViewModelProvider(this, MainViewModelFactory(AppDatabase.getDatabase(this))).get(
+        vm = ViewModelProvider(this, MainViewModelFactory(MainModel(AppDatabase.getDatabase(this)))).get(
             MainViewModel::class.java
         )
         lifecycleScope.launch {
@@ -67,9 +69,7 @@ class MainActivity : FragmentActivity(), MainView {
     }
 
     fun newNote(note: Note){
-        lifecycleScope.launch {
-            vm.addNote(note.header, note.body)
-        }
+        vm.addNote(note.header, note.body)
         showRecycler()
     }
 }

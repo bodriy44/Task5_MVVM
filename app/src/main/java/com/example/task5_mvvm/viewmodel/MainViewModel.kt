@@ -4,19 +4,26 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.task5_mvvm.model.MainModel
+import androidx.lifecycle.viewModelScope
+import com.example.task5_mvvm.model.IMainModel
 import com.example.task5_mvvm.model.Note
-import com.example.task5_mvvm.model.database.AppDatabase
+import com.example.task5_mvvm.utils.SingleLiveEvent
+import kotlinx.coroutines.launch
 
-class MainViewModel(database: AppDatabase): ViewModel() {
+class MainViewModel(private var repository: IMainModel): ViewModel() {
 
     private var _noteCount = MutableLiveData<Int>()
     private var _notes = MutableLiveData<ArrayList<Note>>()
     private var _currentNote = MutableLiveData<Note>()
-    private var model = MainModel(database)
+    private var model = repository
     var noteCount: LiveData<Int> = _noteCount
     var notes: LiveData<ArrayList<Note>> = _notes
     var currentNote: LiveData<Note> = _currentNote
+
+    val onSuccessSaveNote = SingleLiveEvent<Unit>()
+    val onErrorSaveNote = SingleLiveEvent<Unit>()
+    val onSuccessChangeNote = SingleLiveEvent<Unit>()
+    val onErrorChangeNote = SingleLiveEvent<Unit>()
 
     suspend fun initVM() {
         _notes.value = ArrayList(model.getAllNotes())
@@ -30,17 +37,27 @@ class MainViewModel(database: AppDatabase): ViewModel() {
 
     fun getSize() = model.getSize()
 
-    suspend fun addNote(title: String, text: String) {
-        if (title != "null" && text != "null") {
-            model.addNote(title, text)
+    fun addNote(title: String, text: String) {
+        if (title != "null" && text != "null" && title != "" && text != "") {
+            viewModelScope.launch {
+                model.addNote(title, text)
+            }
+
             _notes.value?.add(Note(title, text))
-            Log.i("notes", title)
             _noteCount.value = _noteCount.value?.inc()
+            onSuccessSaveNote.call()
+        } else{
+            onErrorSaveNote.call()
         }
     }
 
     fun changeNote(note: Note) {
-         _currentNote.value = note
+        if (note.header!="" && note.body!="" && note.header!="null" && note.body!="null") {
+            _currentNote.value = note
+            onSuccessChangeNote.call()
+        }else{
+            onErrorChangeNote.call()
+        }
     }
 
     fun getCurrentNote() = _currentNote.value!!

@@ -36,12 +36,109 @@ class MainViewModelTest {
 
     @Before
     fun setUp() {
-        //repository = Mockito.mock(MainModel::class.java)
+        repository = Mockito.mock(MainModel::class.java)
+        viewModel = MainViewModel(repository)
+
         Dispatchers.setMain(mainThreadSurrogate)
     }
 
     @Test
-    fun testGetSizeNon() {
-        assertTrue(true)
+    fun testAddEmptyNote() {
+        viewModel.addNote("", "")
+        var error = false
+        viewModel.onSuccessSaveNote.observeForever {
+            error = true
+        }
+        assertFalse(error)
+
+        var success = false
+        viewModel.onErrorSaveNote.observeForever {
+            success = true
+        }
+        assertTrue(success)
+    }
+
+    @Test
+    fun testAddNullNote() {
+        viewModel.addNote("null", "null")
+
+        var error = false
+        viewModel.onSuccessSaveNote.observeForever {
+            error = true
+        }
+        assertFalse(error)
+
+        var success = false
+        viewModel.onErrorSaveNote.observeForever {
+            success = true
+        }
+        assertTrue(success)
+    }
+
+    @Test
+    fun testAddNDataNote() {
+        viewModel.addNote("Header", "Body")
+
+        var error = false
+        viewModel.onErrorSaveNote.observeForever {
+            error = true
+        }
+        assertFalse(error)
+
+        var success = false
+        viewModel.onSuccessSaveNote.observeForever {
+            success = true
+        }
+        assertTrue(success)
+    }
+
+    @Test
+    fun testChangeDataNote() {
+        viewModel.changeNote(Note("Header", "Body"))
+
+        var error = false
+        viewModel.onErrorChangeNote.observeForever {
+            error = true
+        }
+        assertFalse(error)
+
+        var success = false
+        viewModel.onSuccessChangeNote.observeForever {
+            success = true
+        }
+        assertTrue(success)
+    }
+
+    @Test
+    fun testChangeNullNote() {
+        viewModel.changeNote(Note("null", "null"))
+
+        var error = false
+        viewModel.onSuccessChangeNote.observeForever {
+            error = true
+        }
+        assertFalse(error)
+
+        var success = false
+        viewModel.onErrorChangeNote.observeForever {
+            success = true
+        }
+        assertTrue(success)
+    }
+
+    @Test
+    fun testChangeEmptyNote() {
+        viewModel.changeNote(Note("", ""))
+        var error = false
+        viewModel.onSuccessChangeNote.observeForever {
+            error = true
+        }
+        assertFalse(error)
+
+        var success = false
+        viewModel.onErrorChangeNote.observeForever {
+            success = true
+        }
+        assertTrue(success)
     }
 }
