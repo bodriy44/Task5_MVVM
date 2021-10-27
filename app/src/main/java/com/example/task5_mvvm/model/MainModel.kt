@@ -26,4 +26,16 @@ open class MainModel(var db: AppDatabase): IMainModel {
     }
 
     override suspend fun getAllNotes() = db.noteDao().getAll()
+
+    companion object {
+        private var INSTANCE: MainModel? = null
+        fun getRepository(db: AppDatabase): MainModel {
+            if (INSTANCE != null) {
+                return INSTANCE as MainModel
+            } else {
+                INSTANCE = MainModel(db)
+                return INSTANCE as MainModel
+            }
+        }
+    }
 }

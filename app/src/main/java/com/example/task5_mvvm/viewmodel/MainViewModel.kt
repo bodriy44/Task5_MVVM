@@ -1,6 +1,5 @@
 package com.example.task5_mvvm.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -60,7 +59,7 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
         }
     }
 
-    fun getCurrentNote() = _currentNote.value!!
+    fun getCurrentNote() = _currentNote.value
 
     suspend fun deleteNote(note: Note){
         model.deleteNote(note)

@@ -42,7 +42,7 @@ class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), No
         }
         binding.floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
 
-        adapter = PagerAdapter(this, vm.getIndexNote(vm.getCurrentNote()), vm.getSize(),  vm.getNotes())
+        adapter = PagerAdapter(this, vm.getIndexNote(vm.getCurrentNote()?:Note("","")), vm.getSize(),  vm.getNotes())
         viewPager = binding.pager
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false

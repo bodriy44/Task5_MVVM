@@ -15,4 +15,5 @@
     <string name="about_dialog_pos_but">Да</string>
     <string name="about_dialog_exception">Activity не может быть null</string>
     <string name="about_dialog_message">Перейти на страницу информации о приложении?</string>
+    <string name="base_url" translatable="false">https://jsonplaceholder.typicode.com</string>
 </resources>
