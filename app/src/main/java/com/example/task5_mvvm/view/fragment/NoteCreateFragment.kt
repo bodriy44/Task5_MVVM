@@ -12,12 +12,14 @@ import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.view.MainActivity
 
 class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.task5_mvvm.view.NoteCreateView {
-    private lateinit var binding: FragmentNoteCreateBinding
+    private var _binding: FragmentNoteCreateBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteCreateBinding.inflate(layoutInflater)
+        _binding = FragmentNoteCreateBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -26,6 +28,11 @@ class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.
         binding.saveButton.setOnClickListener { v: View? -> addNote() }
         binding.editTextTitle.setText("")
         binding.editTextText.setText("")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun addNote() {

@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.adapter.NoteAdapter
+import com.example.task5_mvvm.databinding.FragmentPagerBinding
 import com.example.task5_mvvm.databinding.FragmentRecyclerBinding
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.network.APIService
@@ -26,7 +27,8 @@ class RecyclerViewFragment(var vm: MainViewModel) :
     com.example.task5_mvvm.view.RecyclerView,
     OnNoteClickListener {
     lateinit var adapter: NoteAdapter
-    private lateinit var binding: FragmentRecyclerBinding
+    private var _binding: FragmentRecyclerBinding? = null
+    private val binding get() = _binding!!
     private val api = Retrofit.Builder()
         .baseUrl("https://jsonplaceholder.typicode.com")
         .addConverterFactory(GsonConverterFactory.create())
@@ -37,7 +39,7 @@ class RecyclerViewFragment(var vm: MainViewModel) :
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRecyclerBinding.inflate(layoutInflater)
+        _binding = FragmentRecyclerBinding.inflate(layoutInflater)
         adapter = NoteAdapter(this)
         binding.recyclerView.adapter = adapter
         binding.floatingActionButtonAddNote.setOnClickListener { v: View? -> createNote() }
@@ -50,6 +52,11 @@ class RecyclerViewFragment(var vm: MainViewModel) :
         vm.notes.observe(this) {
             initAdapter(it)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun createNote() {

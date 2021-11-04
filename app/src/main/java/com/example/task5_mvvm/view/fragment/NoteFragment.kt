@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.adapter.PagerAdapter
 import com.example.task5_mvvm.databinding.FragmentNoteBinding
+import com.example.task5_mvvm.databinding.FragmentNoteCreateBinding
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.view.NoteView
 import com.example.task5_mvvm.viewmodel.MainViewModel
@@ -21,13 +22,14 @@ import kotlinx.coroutines.launch
 class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), NoteView {
     private lateinit var adapter: PagerAdapter
     private lateinit var viewPager: ViewPager2
-    private lateinit var binding: FragmentNoteBinding
+    private var _binding: FragmentNoteBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteBinding.inflate(layoutInflater)
+        _binding = FragmentNoteBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -46,6 +48,11 @@ class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), No
         viewPager = binding.pager
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
