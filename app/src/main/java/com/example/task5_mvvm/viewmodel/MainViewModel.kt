@@ -20,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainViewModel(private var repository: IMainModel): ViewModel() {
 
     private var _noteCount = MutableLiveData<Int>()
+    private var _noteIndex = MutableLiveData<Int>()
     private var _notes = MutableLiveData<ArrayList<Note>>()
     private var _currentNote = MutableLiveData<Note>()
     private var model = repository
@@ -29,20 +30,25 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
         .build()
         .create(APIService::class.java)
 
+    var noteIndex: LiveData<Int> = _noteIndex
     var noteCount: LiveData<Int> = _noteCount
     var notes: LiveData<ArrayList<Note>> = _notes
     var currentNote: LiveData<Note> = _currentNote
-
 
     val onSuccessSaveNote = SingleLiveEvent<Unit>()
     val onErrorSaveNote = SingleLiveEvent<Unit>()
     val onSuccessChangeNote = SingleLiveEvent<Unit>()
     val onErrorChangeNote = SingleLiveEvent<Unit>()
+    val onCreateNote = SingleLiveEvent<Unit>()
 
     suspend fun initVM() {
         _notes.value = ArrayList(model.getAllNotes())
         _noteCount.value = _notes.value?.size
         model.notes = notes.value as MutableList<Note>
+    }
+
+    fun createNote(){
+        onCreateNote.call()
     }
 
     fun getIndexNote(note: Note) = model.getIndexNote(note)
@@ -74,10 +80,20 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
         }
     }
 
+    fun changeNote() {
+        if (noteIndex.value!=-1 && noteIndex.value!=null) {
+            _currentNote.value = getNote(noteIndex.value!!)
+            onSuccessChangeNote.call()
+        }else{
+            onErrorChangeNote.call()
+        }
+    }
+
     fun getCurrentNote() = _currentNote.value
 
     suspend fun deleteNote(note: Note){
         model.deleteNote(note)
+        _noteCount.value = _noteCount.value?.dec()
     }
 
     fun getNote(index: Int): Note{
@@ -93,5 +109,9 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
                 Log.d("error", "error")
             }
         })
+    }
+
+    fun setCurrentNoteIndex(index: Int){
+        _noteIndex.value = index
     }
 }

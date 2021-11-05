@@ -6,14 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.databinding.FragmentNoteCreateBinding
+import com.example.task5_mvvm.model.MainModel
 import com.example.task5_mvvm.model.Note
-import com.example.task5_mvvm.view.MainActivity
+import com.example.task5_mvvm.model.database.AppDatabase
+import com.example.task5_mvvm.viewmodel.MainViewModel
+import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 
 class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.task5_mvvm.view.NoteCreateView {
     private var _binding: FragmentNoteCreateBinding? = null
     private val binding get() = _binding!!
+    private lateinit var vm: MainViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        vm = ViewModelProvider(requireActivity(), MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
+        ).get(MainViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +47,7 @@ class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.
     }
 
     override fun addNote() {
-        (activity as MainActivity).newNote(note)
+        vm.addNote(note)
     }
 
     val note: Note

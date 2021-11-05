@@ -68,11 +68,11 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler), com.example.t
     }
 
     override fun createNote() {
-        (activity as MainActivity).showCreateFragment()
+        vm.createNote()
     }
 
     override fun onNoteClick(index: Int) {
-        (activity as MainActivity).showNote(vm.getNote(index))
+        vm.setCurrentNoteIndex(index)
     }
 
     fun initAdapter(notes: List<Note>) {

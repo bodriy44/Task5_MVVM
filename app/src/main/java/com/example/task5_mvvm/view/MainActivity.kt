@@ -39,6 +39,12 @@ class MainActivity : FragmentActivity(), MainView {
         binding.buttonAbout.setOnClickListener { v: View? ->
             AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
         }
+
+        vm.noteCount.observe(this){
+            showRecycler()
+        }
+        setCurrentNoteObserver()
+        setCreateNoteObserver()
         initFragments()
         showRecycler()
     }
@@ -55,12 +61,24 @@ class MainActivity : FragmentActivity(), MainView {
             .commit()
     }
 
-    override fun showNote(note: Note) {
-        vm.changeNote(note)
+    override fun setCurrentNoteObserver() {
+        vm.noteIndex.observe(this) {
+            showNote()
+        }
+    }
+
+    override fun showNote(){
+        vm.changeNote()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, noteFragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun setCreateNoteObserver() {
+        vm.onCreateNote.observe(this) {
+            showCreateFragment()
+        }
     }
 
     override fun showCreateFragment() {
@@ -68,10 +86,5 @@ class MainActivity : FragmentActivity(), MainView {
             .replace(R.id.fragmentContainerView, noteCreateFragment)
             .addToBackStack(null)
             .commit()
-    }
-
-    fun newNote(note: Note){
-        vm.addNote(note)
-        showRecycler()
     }
 }
