@@ -6,4 +6,5 @@ interface MainView {
     fun showCreateFragment()
     fun showRecycler()
     fun showNote(note: Note)
+    fun initFragments()
 }

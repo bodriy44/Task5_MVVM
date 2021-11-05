@@ -22,9 +22,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RecyclerViewFragment(var vm: MainViewModel) :
-    Fragment(R.layout.fragment_recycler),
-    com.example.task5_mvvm.view.RecyclerView,
+class RecyclerViewFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_recycler), com.example.task5_mvvm.view.RecyclerView,
     OnNoteClickListener {
     lateinit var adapter: NoteAdapter
     private var _binding: FragmentRecyclerBinding? = null
@@ -40,11 +38,15 @@ class RecyclerViewFragment(var vm: MainViewModel) :
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRecyclerBinding.inflate(layoutInflater)
-        adapter = NoteAdapter(this)
-        binding.recyclerView.adapter = adapter
+        initRecycler()
         binding.floatingActionButtonAddNote.setOnClickListener { v: View? -> createNote() }
         binding.floatingActionButtonDownloadNote.setOnClickListener{ v: View? -> handleDownloadButtonClick()}
         return binding.root
+    }
+
+    override fun initRecycler() {
+        adapter = NoteAdapter(this)
+        binding.recyclerView.adapter = adapter
     }
 
     override fun onStart() {

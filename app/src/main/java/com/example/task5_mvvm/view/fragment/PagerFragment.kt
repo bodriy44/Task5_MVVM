@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.task5_mvvm.databinding.FragmentNoteBinding
 import com.example.task5_mvvm.databinding.FragmentPagerBinding
 import com.example.task5_mvvm.model.Note
 

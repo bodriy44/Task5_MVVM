@@ -38,12 +38,13 @@ class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), No
         super.onStart()
 
         binding.floatingActionButtonDelete.setOnClickListener { v: View? ->
-            deleteNote(
-                vm.getNotes()[(viewPager.currentItem + adapter.position2) % adapter.size]
-            )
+            deleteNote(vm.getNotes()[(viewPager.currentItem + adapter.position2) % adapter.size])
         }
         binding.floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
+        initViewPager()
+    }
 
+    override fun initViewPager() {
         adapter = PagerAdapter(this, vm.getIndexNote(vm.getCurrentNote()?:Note("","")), vm.getSize(),  vm.getNotes())
         viewPager = binding.pager
         viewPager.adapter = adapter

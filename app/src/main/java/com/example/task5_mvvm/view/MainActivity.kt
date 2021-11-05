@@ -33,18 +33,19 @@ class MainActivity : FragmentActivity(), MainView {
         lifecycleScope.launch {
             vm.initVM()
         }
-        noteCreateFragment = NoteCreateFragment()
-        noteFragment = NoteFragment(vm)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.buttonAbout.setOnClickListener { v: View? ->
-            val myDialogFragment = AboutDialogFragment()
-            myDialogFragment.show(supportFragmentManager.beginTransaction(), "dialog")
-
+            AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
         }
-        recyclerViewFragment = RecyclerViewFragment(vm)
+        initFragments()
         showRecycler()
+    }
+
+    override fun initFragments() {
+        noteCreateFragment = NoteCreateFragment()
+        noteFragment = NoteFragment(vm)
+        recyclerViewFragment = RecyclerViewFragment(vm)
     }
 
     override fun showRecycler() {
