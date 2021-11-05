@@ -1,13 +1,21 @@
 package com.example.task5_mvvm.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.task5_mvvm.model.IMainModel
 import com.example.task5_mvvm.model.Note
+import com.example.task5_mvvm.network.APIService
+import com.example.task5_mvvm.network.NoteModel
 import com.example.task5_mvvm.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainViewModel(private var repository: IMainModel): ViewModel() {
 
@@ -15,9 +23,16 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
     private var _notes = MutableLiveData<ArrayList<Note>>()
     private var _currentNote = MutableLiveData<Note>()
     private var model = repository
+    private val api = Retrofit.Builder()
+        .baseUrl("https://jsonplaceholder.typicode.com")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(APIService::class.java)
+
     var noteCount: LiveData<Int> = _noteCount
     var notes: LiveData<ArrayList<Note>> = _notes
     var currentNote: LiveData<Note> = _currentNote
+
 
     val onSuccessSaveNote = SingleLiveEvent<Unit>()
     val onErrorSaveNote = SingleLiveEvent<Unit>()
@@ -67,5 +82,16 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
 
     fun getNote(index: Int): Note{
         return model.getNote(index)
+    }
+
+    fun downloadNote(){
+        api.getNote().enqueue(object : Callback<NoteModel> {
+            override fun onResponse(call: Call<NoteModel>, response: Response<NoteModel>) {
+                addNote(Note(response.body()!!.title, response.body()!!.body))
+            }
+            override fun onFailure(call: Call<NoteModel>, t: Throwable?) {
+                Log.d("error", "error")
+            }
+        })
     }
 }

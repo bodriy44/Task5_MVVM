@@ -32,11 +32,6 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler), com.example.t
     private var _binding: FragmentRecyclerBinding? = null
     private val binding get() = _binding!!
     private lateinit var vm: MainViewModel
-    private val api = Retrofit.Builder()
-        .baseUrl("https://jsonplaceholder.typicode.com")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(APIService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,14 +83,7 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler), com.example.t
     }
 
     fun handleDownloadButtonClick() {
-        api.getNote().enqueue(object : Callback<NoteModel> {
-            override fun onResponse(call: Call<NoteModel>, response: Response<NoteModel>) {
-                vm.addNote(Note(response.body()!!.title, response.body()!!.body))
-            }
-            override fun onFailure(call: Call<NoteModel>, t: Throwable?) {
-                Log.d("error", "error")
-            }
-        })
+        vm.downloadNote()
         adapter.notifyDataSetChanged()
     }
 }
