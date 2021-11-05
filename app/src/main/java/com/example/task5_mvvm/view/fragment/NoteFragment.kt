@@ -8,22 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.adapter.PagerAdapter
 import com.example.task5_mvvm.databinding.FragmentNoteBinding
 import com.example.task5_mvvm.databinding.FragmentNoteCreateBinding
+import com.example.task5_mvvm.model.MainModel
 import com.example.task5_mvvm.model.Note
+import com.example.task5_mvvm.model.database.AppDatabase
 import com.example.task5_mvvm.view.NoteView
 import com.example.task5_mvvm.viewmodel.MainViewModel
+import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
 
-class NoteFragment(var vm: MainViewModel) : Fragment(R.layout.fragment_note), NoteView {
+class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
     private lateinit var adapter: PagerAdapter
     private lateinit var viewPager: ViewPager2
+    private lateinit var vm: MainViewModel
     private var _binding: FragmentNoteBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        vm = ViewModelProvider(requireActivity(), MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
+        ).get(MainViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -33,6 +33,7 @@ class MainActivity : FragmentActivity(), MainView {
         lifecycleScope.launch {
             vm.initVM()
         }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.buttonAbout.setOnClickListener { v: View? ->
@@ -44,8 +45,8 @@ class MainActivity : FragmentActivity(), MainView {
 
     override fun initFragments() {
         noteCreateFragment = NoteCreateFragment()
-        noteFragment = NoteFragment(vm)
-        recyclerViewFragment = RecyclerViewFragment(vm)
+        noteFragment = NoteFragment()
+        recyclerViewFragment = RecyclerViewFragment()
     }
 
     override fun showRecycler() {
