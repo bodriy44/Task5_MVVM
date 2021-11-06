@@ -97,9 +97,7 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
         _noteCount.value = _noteCount.value?.dec()
     }
 
-    fun getNote(index: Int): Note{
-        return repository.getNote(index)
-    }
+    fun getNote(index: Int) = repository.getNote(index)
 
     fun downloadNote(){
         api.getNote().enqueue(object : Callback<NoteModel> {

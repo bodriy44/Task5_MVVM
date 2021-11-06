@@ -21,7 +21,7 @@ import java.util.*
 
 class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
-    private var notes: List<Note> = ArrayList()
+    var notes: List<Note> = ArrayList()
     private lateinit var binding: RecyclerItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,12 +43,6 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     }
 
     override fun getItemCount() = notes.size
-
-    fun setNotes(notes: List<Note>) {
-        this.notes = notes
-    }
-
-    fun getNotes(): List<Note> = this.notes
 
     class ViewHolder(binding: RecyclerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

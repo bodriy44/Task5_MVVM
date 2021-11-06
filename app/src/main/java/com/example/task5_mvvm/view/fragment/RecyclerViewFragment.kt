@@ -66,10 +66,8 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler), com.example.t
     }
 
     override fun initAdapter(notes: List<Note>) {
-        with(adapter) {
-            setNotes(notes)
-            notifyDataSetChanged()
-        }
+        adapter.notes = notes
+        adapter.notifyDataSetChanged()
     }
 
     override fun handleDownloadButtonClick() {
