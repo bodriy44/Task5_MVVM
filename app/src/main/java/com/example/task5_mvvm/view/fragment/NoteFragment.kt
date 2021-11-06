@@ -57,14 +57,14 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
         super.onStart()
 
         binding.floatingActionButtonDelete.setOnClickListener { v: View? ->
-            deleteNote(vm.getNotes()[(viewPager.currentItem + adapter.position2) % adapter.size])
+            deleteNote(vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size])
         }
         binding.floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
         initViewPager()
     }
 
     override fun initViewPager() {
-        adapter = PagerAdapter(this, vm.getIndexNote(vm.getCurrentNote()?:Note("","")), vm.getSize(),  vm.getNotes())
+        adapter = PagerAdapter(this, vm.getIndexNote(vm.getCurrentNote()?:Note("","")), vm.getNotesSize(),  vm.getNotes())
         viewPager = binding.pager
         viewPager.adapter = adapter
         viewPager.isSaveEnabled = false
@@ -77,7 +77,7 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun shareNote() {
-        val note = vm.getNotes()[(viewPager.currentItem + adapter.position2) % adapter.size]
+        val note = vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size]
         val sendIntent = Intent()
         with(sendIntent) {
             action = Intent.ACTION_SEND

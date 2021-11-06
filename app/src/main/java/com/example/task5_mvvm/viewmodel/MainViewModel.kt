@@ -65,7 +65,7 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
 
     fun getNotes() = repository.notes
 
-    fun getSize() = repository.getSize()
+    fun getNotesSize() = repository.getNotesSize()
 
     fun addNote(note: Note) {
         if (note.header != "null" && note.body != "null" && note.header != "" && note.body != "") {
@@ -81,7 +81,7 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
         }
     }
 
-    fun changeNote() {
+    fun changeCurrentNote() {
         if (noteIndex.value!=-1 && noteIndex.value!=null) {
             _currentNote.value = getNote(noteIndex.value!!)
             onSuccessChangeNote.call()

@@ -21,6 +21,7 @@ import com.example.task5_mvvm.viewmodel.MainViewModelFactory
  *
  * @property binding ViewBinding для элемента NoteCreateFragment
  */
+
 class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.task5_mvvm.view.NoteCreateView {
     private var _binding: FragmentNoteCreateBinding? = null
     private val binding get() = _binding!!

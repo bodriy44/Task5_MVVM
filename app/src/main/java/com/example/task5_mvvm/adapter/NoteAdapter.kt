@@ -23,6 +23,7 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     private var notes: List<Note> = ArrayList()
     private lateinit var binding: RecyclerItemBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = RecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(

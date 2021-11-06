@@ -1,6 +1,5 @@
 package com.example.task5_mvvm.viewModel
 
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.task5_mvvm.model.IMainModel
 import com.example.task5_mvvm.model.MainModel
@@ -96,9 +95,10 @@ class MainViewModelTest {
 
     @Test
     fun testChangeDataNote() {
-        val note: Note = Note("Header", "Body")
+        val note = Note("Header", "Body")
         viewModel.addNote(note)
-        viewModel.changeNote(note)
+        viewModel.setCurrentNoteIndex(0)
+        viewModel.changeCurrentNote()
 
         var error = false
         viewModel.onErrorChangeNote.observeForever {
@@ -115,8 +115,10 @@ class MainViewModelTest {
 
     @Test
     fun testChangeNonExistNote() {
-        viewModel.setCurrentNoteIndex(-1)
-        viewModel.changeNote()
+        val note = Note("Header", "Body")
+        viewModel.addNote(note)
+        viewModel.setCurrentNoteIndex(1)
+        viewModel.changeCurrentNote()
 
         var error = false
         viewModel.onErrorChangeNote.observeForever {

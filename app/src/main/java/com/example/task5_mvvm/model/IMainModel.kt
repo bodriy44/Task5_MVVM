@@ -5,7 +5,7 @@ interface IMainModel {
     suspend fun addNote(note: Note)
     suspend fun addNote(title: String, text: String)
     suspend fun getAllNotes():  List<Note>
-    fun getSize(): Int
+    fun getNotesSize(): Int
     fun getNote(index: Int): Note
     fun getIndexNote(note: Note): Int
     var notes: MutableList<Note>

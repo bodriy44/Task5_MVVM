@@ -21,7 +21,7 @@ open class MainModel(var db: AppDatabase): IMainModel {
         notes.removeAt(notes.indexOf(note))
     }
 
-    override fun getSize() = notes.size
+    override fun getNotesSize() = notes.size
 
     override fun getNote(index: Int) = notes[index]
 
@@ -33,7 +33,7 @@ open class MainModel(var db: AppDatabase): IMainModel {
         addNote(Note(title, text))
     }
 
-    override suspend fun getAllNotes() = db.noteDao().getAll()
+    override suspend fun getAllNotes() = db.noteDao().getAllNotes()
 
     companion object {
         private var INSTANCE: MainModel? = null

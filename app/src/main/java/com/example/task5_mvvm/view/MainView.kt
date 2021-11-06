@@ -7,4 +7,6 @@ interface MainView {
     fun initFragments()
     fun setCurrentNoteObserver()
     fun setCreateNoteObserver()
+    fun setNoteSizeObserver()
+    fun initViewModel()
 }

@@ -26,26 +26,26 @@ class MainActivity : FragmentActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initViewModel()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.buttonAbout.setOnClickListener { v: View? ->
+            AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
+        }
+        setNoteSizeObserver()
+        setCurrentNoteObserver()
+        setCreateNoteObserver()
+        initFragments()
+        showRecycler()
+    }
+
+    override fun initViewModel() {
         vm = ViewModelProvider(this, MainViewModelFactory(MainModel.getRepository(AppDatabase.getDatabase(this)))).get(
             MainViewModel::class.java
         )
         lifecycleScope.launch {
             vm.initVM()
         }
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.buttonAbout.setOnClickListener { v: View? ->
-            AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
-        }
-
-        vm.noteCount.observe(this){
-            showRecycler()
-        }
-        setCurrentNoteObserver()
-        setCreateNoteObserver()
-        initFragments()
-        showRecycler()
     }
 
     override fun initFragments() {
@@ -60,6 +60,12 @@ class MainActivity : FragmentActivity(), MainView {
             .commit()
     }
 
+    override fun setNoteSizeObserver(){
+        vm.noteCount.observe(this){
+            showRecycler()
+        }
+    }
+
     override fun setCurrentNoteObserver() {
         vm.noteIndex.observe(this) {
             showNote()
@@ -67,7 +73,7 @@ class MainActivity : FragmentActivity(), MainView {
     }
 
     override fun showNote(){
-        vm.changeNote()
+        vm.changeCurrentNote()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, noteFragment)
             .addToBackStack(null)

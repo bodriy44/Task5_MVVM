@@ -10,10 +10,7 @@ import com.example.task5_mvvm.model.Note
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM notes")
-    suspend fun getAll(): List<Note>
-
-    @Query("SELECT * FROM notes")
-    fun getProfiles(): LiveData<List<Note>>
+    suspend fun getAllNotes(): List<Note>
 
     @Insert
     suspend fun addNote(note: Note)
