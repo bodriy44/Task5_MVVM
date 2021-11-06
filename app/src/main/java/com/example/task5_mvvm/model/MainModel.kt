@@ -3,6 +3,14 @@ package com.example.task5_mvvm.model
 import com.example.task5_mvvm.model.database.AppDatabase
 import java.util.*
 
+/**
+ *
+ * Класс для взаимодействия с данными являющийся синглтоном
+ *
+ * @property db база данных приложения
+ * @property notes список заметок
+ */
+
 open class MainModel(var db: AppDatabase): IMainModel {
     override var notes: MutableList<Note> = ArrayList()
 

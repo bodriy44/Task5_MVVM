@@ -14,7 +14,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.adapter.PagerAdapter
 import com.example.task5_mvvm.databinding.FragmentNoteBinding
-import com.example.task5_mvvm.databinding.FragmentNoteCreateBinding
 import com.example.task5_mvvm.model.MainModel
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.model.database.AppDatabase
@@ -22,6 +21,15 @@ import com.example.task5_mvvm.view.NoteView
 import com.example.task5_mvvm.viewmodel.MainViewModel
 import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.launch
+
+/**
+ *
+ * Класс фрагмента, необходимого для вывода данных кнкретной заметки на экран
+ *
+ * @property adapter адаптер для ViewPager
+ * @property binding ViewBinding для элемента NoteFragment
+ *
+ */
 
 class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
     private lateinit var adapter: PagerAdapter
@@ -82,7 +90,7 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
         startActivity(Intent.createChooser(sendIntent, null))
     }
 
-    fun deleteNote(note: Note) {
+    override fun deleteNote(note: Note) {
         lifecycleScope.launch {
             vm.deleteNote(note)
         }

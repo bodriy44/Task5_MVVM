@@ -15,6 +15,12 @@ import com.example.task5_mvvm.model.database.AppDatabase
 import com.example.task5_mvvm.viewmodel.MainViewModel
 import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 
+/**
+ *
+ * Класс фрагмента, необходимый для создания новой заметки
+ *
+ * @property binding ViewBinding для элемента NoteCreateFragment
+ */
 class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.task5_mvvm.view.NoteCreateView {
     private var _binding: FragmentNoteCreateBinding? = null
     private val binding get() = _binding!!

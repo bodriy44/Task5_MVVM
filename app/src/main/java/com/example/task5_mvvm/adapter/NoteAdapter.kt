@@ -10,6 +10,15 @@ import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.view.OnNoteClickListener
 import java.util.*
 
+/**
+ *
+ * Данный класс является адаптером для RecyclerView
+ *
+ * @property onNoteClickListener обработчик события нажатия на заметку.
+ * @property notes список заметок
+ * @property binding ViewBinding для элемента RecyclerView
+ */
+
 class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     private var notes: List<Note> = ArrayList()
@@ -40,14 +49,9 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
 
     fun getNotes(): List<Note> = this.notes
 
-    class ViewHolder(private val binding: RecyclerItemBinding) :
+    class ViewHolder(binding: RecyclerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val dateView: TextView
-        val headerView: TextView
-
-        init {
-            dateView = binding.date
-            headerView = binding.title
-        }
+        val dateView: TextView = binding.date
+        val headerView: TextView = binding.title
     }
 }

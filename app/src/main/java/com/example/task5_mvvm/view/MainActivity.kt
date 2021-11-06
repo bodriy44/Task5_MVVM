@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.databinding.ActivityMainBinding
 import com.example.task5_mvvm.model.MainModel
-import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.model.database.AppDatabase
 import com.example.task5_mvvm.view.fragment.AboutDialogFragment
 import com.example.task5_mvvm.view.fragment.NoteCreateFragment
@@ -20,8 +19,8 @@ import kotlinx.coroutines.launch
 
 class MainActivity : FragmentActivity(), MainView {
     private lateinit var vm: MainViewModel
-    lateinit var recyclerViewFragment: RecyclerViewFragment
-    lateinit var noteFragment: NoteFragment
+    private lateinit var recyclerViewFragment: RecyclerViewFragment
+    private lateinit var noteFragment: NoteFragment
     private lateinit var noteCreateFragment: NoteCreateFragment
     private lateinit var binding: ActivityMainBinding
 

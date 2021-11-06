@@ -115,7 +115,8 @@ class MainViewModelTest {
 
     @Test
     fun testChangeNonExistNote() {
-        viewModel.changeNote(Note("null", "null"))
+        viewModel.setCurrentNoteIndex(-1)
+        viewModel.changeNote()
 
         var error = false
         viewModel.onErrorChangeNote.observeForever {

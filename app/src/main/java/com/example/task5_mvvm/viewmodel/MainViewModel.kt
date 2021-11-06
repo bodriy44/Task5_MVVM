@@ -17,13 +17,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ *
+ * Класс основной ViewModel
+ *
+ * @property repository объект для взаимодействия с данными
+ * @property noteIndex индекс текущей заметки во ViewPager
+ * @property currentNote текущая заметка во ViewPager
+ * @property api интерфейс необходимй для скачивания заметки
+ *
+ */
+
 class MainViewModel(private var repository: IMainModel): ViewModel() {
 
     private var _noteCount = MutableLiveData<Int>()
     private var _noteIndex = MutableLiveData<Int>()
     private var _notes = MutableLiveData<ArrayList<Note>>()
     private var _currentNote = MutableLiveData<Note>()
-    private var model = repository
     private val api = Retrofit.Builder()
         .baseUrl("https://jsonplaceholder.typicode.com")
         .addConverterFactory(GsonConverterFactory.create())
@@ -42,25 +52,25 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
     val onCreateNote = SingleLiveEvent<Unit>()
 
     suspend fun initVM() {
-        _notes.value = ArrayList(model.getAllNotes())
+        _notes.value = ArrayList(repository.getAllNotes())
         _noteCount.value = _notes.value?.size
-        model.notes = notes.value as MutableList<Note>
+        repository.notes = notes.value as MutableList<Note>
     }
 
     fun createNote(){
         onCreateNote.call()
     }
 
-    fun getIndexNote(note: Note) = model.getIndexNote(note)
+    fun getIndexNote(note: Note) = repository.getIndexNote(note)
 
-    fun getNotes() = model.notes
+    fun getNotes() = repository.notes
 
-    fun getSize() = model.getSize()
+    fun getSize() = repository.getSize()
 
     fun addNote(note: Note) {
         if (note.header != "null" && note.body != "null" && note.header != "" && note.body != "") {
             viewModelScope.launch {
-                model.addNote(note.header, note.body)
+                repository.addNote(note.header, note.body)
             }
 
             _notes.value?.add(Note(note.header, note.body))
@@ -68,15 +78,6 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
             onSuccessSaveNote.call()
         } else{
             onErrorSaveNote.call()
-        }
-    }
-
-    fun changeNote(note: Note) {
-        if (model.getIndexNote(note)!=-1) {
-            _currentNote.value = note
-            onSuccessChangeNote.call()
-        }else{
-            onErrorChangeNote.call()
         }
     }
 
@@ -92,12 +93,12 @@ class MainViewModel(private var repository: IMainModel): ViewModel() {
     fun getCurrentNote() = _currentNote.value
 
     suspend fun deleteNote(note: Note){
-        model.deleteNote(note)
+        repository.deleteNote(note)
         _noteCount.value = _noteCount.value?.dec()
     }
 
     fun getNote(index: Int): Note{
-        return model.getNote(index)
+        return repository.getNote(index)
     }
 
     fun downloadNote(){
