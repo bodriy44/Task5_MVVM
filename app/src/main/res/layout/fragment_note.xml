@@ -9,25 +9,19 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonShare"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fragment_note_margin"
-        app:srcCompat="@android:drawable/ic_menu_share"
-        android:layout_marginRight="@dimen/fragment_note_margin" />
+        app:srcCompat="@android:drawable/ic_menu_share" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonDelete"
         android:layout_gravity="bottom|start"
-        android:layout_marginStart="@dimen/fragment_note_margin"
         app:srcCompat="@android:drawable/ic_menu_delete"
-        android:layout_marginLeft="@dimen/fragment_note_margin" />
+        android:layout_marginLeft="@dimen/fragment_note_margin"
+        android:layout_marginStart="@dimen/fragment_note_margin" />
 </FrameLayout>

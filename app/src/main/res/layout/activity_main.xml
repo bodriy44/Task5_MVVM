@@ -23,7 +23,6 @@
             android:src="@android:drawable/ic_dialog_info"
             android:layout_gravity="end"
             />
-
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView
