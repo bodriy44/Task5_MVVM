@@ -16,26 +16,17 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonAddNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fragment_note_margin"
-        android:layout_marginBottom="@dimen/fragment_note_margin"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/ic_menu_add"
-        android:layout_marginRight="@dimen/fragment_note_margin" />
+        android:layout_marginRight="@dimen/fragment_note_margin"
+        android:src="@android:drawable/ic_menu_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonDownloadNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_marginStart="@dimen/fragment_note_margin"
         android:layout_marginLeft="@dimen/fragment_note_margin"
-        android:layout_marginBottom="@dimen/fragment_note_margin"
-        android:clickable="true"
-        android:focusable="true"
         android:src="@android:drawable/stat_sys_download" />
 </FrameLayout>
