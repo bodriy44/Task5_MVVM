@@ -22,20 +22,15 @@ import java.util.*
 class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     var notes: List<Note> = ArrayList()
-    private lateinit var binding: RecyclerItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = RecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(
-            binding
-        )
+        val binding: RecyclerItemBinding = RecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = notes[position]
-        with(holder){
-            headerView.text = note.header
-            dateView.text = note.date
+        with(holder) {
+            bind(notes[position])
             itemView.setOnClickListener { v: View? ->
                 onNoteClickListener.onNoteClick(position)
             }
@@ -46,6 +41,10 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
 
     class ViewHolder(binding: RecyclerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        fun bind(note: Note){
+            headerView.text = note.header
+            dateView.text = note.date
+        }
         val dateView: TextView = binding.date
         val headerView: TextView = binding.title
     }
