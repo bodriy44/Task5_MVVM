@@ -26,7 +26,6 @@
         <item name="android:layout_marginBottom">@dimen/fragment_note_margin</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="layout_constraintBottom_toBottomOf">parent</item>
     </style>
 
 

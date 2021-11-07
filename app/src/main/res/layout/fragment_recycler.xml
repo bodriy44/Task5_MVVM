@@ -26,7 +26,6 @@
         style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonDownloadNote"
         android:layout_gravity="bottom|start"
-        android:layout_marginStart="@dimen/fragment_note_margin"
         android:layout_marginLeft="@dimen/fragment_note_margin"
         android:src="@android:drawable/stat_sys_download" />
 </FrameLayout>

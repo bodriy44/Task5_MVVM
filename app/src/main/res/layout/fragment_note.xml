@@ -17,13 +17,13 @@
         android:layout_gravity="bottom|end"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginRight="@dimen/fragment_note_margin"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        app:srcCompat="@android:drawable/ic_menu_share"
+        android:layout_marginEnd="@dimen/fragment_note_margin" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonDelete"
         android:layout_gravity="bottom|start"
         app:srcCompat="@android:drawable/ic_menu_delete"
-        android:layout_marginLeft="@dimen/fragment_note_margin"
-        android:layout_marginStart="@dimen/fragment_note_margin" />
+        android:layout_marginLeft="@dimen/fragment_note_margin" />
 </FrameLayout>
