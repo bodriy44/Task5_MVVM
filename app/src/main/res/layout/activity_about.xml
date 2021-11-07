@@ -13,6 +13,5 @@
         android:layout_marginHorizontal="@dimen/text_view_layout_margin"
         android:text='@string/about_info'
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-         />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

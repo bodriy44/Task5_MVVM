@@ -5,16 +5,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/recyclerItemStyle"
-            android:clickable="false"
-            android:hint="@string/fragment_note_title" />
+    <TextView
+        android:id="@+id/title"
+        style="@style/recyclerItemStyle"
+        android:clickable="false"
+        android:hint="@string/fragment_note_title" />
 
-        <TextView
-            android:id="@+id/date"
-            style="@style/recyclerItemStyle"
-            android:gravity="end"
-            android:hint="@string/fragment_note_date"
-            android:textSize="@dimen/recycler_item_text_size" />
+    <TextView
+        android:id="@+id/date"
+        style="@style/recyclerItemStyle"
+        android:gravity="end"
+        android:hint="@string/fragment_note_date"
+        android:textSize="@dimen/recycler_item_text_size" />
 </LinearLayout>

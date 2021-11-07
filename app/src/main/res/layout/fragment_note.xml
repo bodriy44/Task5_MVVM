@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.NoteFragment">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -12,18 +12,18 @@
         android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonShare"
+        style="@style/MyFloatingActionButtonStyle"
         android:layout_gravity="bottom|end"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/fragment_note_margin"
         android:layout_marginRight="@dimen/fragment_note_margin"
-        app:srcCompat="@android:drawable/ic_menu_share"
-        android:layout_marginEnd="@dimen/fragment_note_margin" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_share" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonDelete"
+        style="@style/MyFloatingActionButtonStyle"
         android:layout_gravity="bottom|start"
-        app:srcCompat="@android:drawable/ic_menu_delete"
-        android:layout_marginLeft="@dimen/fragment_note_margin" />
+        android:layout_marginLeft="@dimen/fragment_note_margin"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 </FrameLayout>

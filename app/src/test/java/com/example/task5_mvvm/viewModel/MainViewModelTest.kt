@@ -39,7 +39,7 @@ class MainViewModelTest {
     }
 
     @After
-    fun cleanUp(){
+    fun cleanUp() {
         Mockito.reset(repository)
     }
 

@@ -4,27 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.RecyclerViewFragment"
-    app:layout_constraintTop_toBottomOf="@id/toolbar">
+    app:layout_constraintTop_toBottomOf="@id/toolbar"
+    tools:context=".view.fragment.RecyclerViewFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recycler_layout_height"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/recycler_item">
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/recycler_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonAddNote"
+        style="@style/MyFloatingActionButtonStyle"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="@dimen/fragment_note_margin"
         android:src="@android:drawable/ic_menu_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/MyFloatingActionButtonStyle"
         android:id="@+id/floatingActionButtonDownloadNote"
+        style="@style/MyFloatingActionButtonStyle"
         android:layout_gravity="bottom|start"
         android:layout_marginLeft="@dimen/fragment_note_margin"
         android:src="@android:drawable/stat_sys_download" />
