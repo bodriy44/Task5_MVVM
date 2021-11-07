@@ -16,7 +16,8 @@ import com.example.task5_mvvm.view.OnNoteClickListener
 import com.example.task5_mvvm.viewmodel.MainViewModel
 import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 
-class RecyclerViewFragment : Fragment(R.layout.fragment_recycler), com.example.task5_mvvm.view.RecyclerView,
+class RecyclerViewFragment : Fragment(R.layout.fragment_recycler),
+    com.example.task5_mvvm.view.RecyclerView,
     OnNoteClickListener {
     private lateinit var adapter: NoteAdapter
     private var _binding: FragmentRecyclerBinding? = null
@@ -25,7 +26,9 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler), com.example.t
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm = ViewModelProvider(requireActivity(), MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
+        vm = ViewModelProvider(
+            requireActivity(),
+            MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
         ).get(MainViewModel::class.java)
     }
 
@@ -33,10 +36,11 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler), com.example.t
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRecyclerBinding.inflate(layoutInflater)
+        _binding = FragmentRecyclerBinding.inflate(layoutInflater).apply {
+            floatingActionButtonAddNote.setOnClickListener { v: View? -> createNote() }
+            floatingActionButtonDownloadNote.setOnClickListener { v: View? -> handleDownloadButtonClick() }
+        }
         initRecycler()
-        binding.floatingActionButtonAddNote.setOnClickListener { v: View? -> createNote() }
-        binding.floatingActionButtonDownloadNote.setOnClickListener{ v: View? -> handleDownloadButtonClick()}
         return binding.root
     }
 

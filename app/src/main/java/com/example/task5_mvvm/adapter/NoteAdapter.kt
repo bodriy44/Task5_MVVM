@@ -23,10 +23,13 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     var notes: List<Note> = ArrayList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: RecyclerItemBinding = RecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        RecyclerItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
@@ -41,10 +44,11 @@ class NoteAdapter(private val onNoteClickListener: OnNoteClickListener) :
 
     class ViewHolder(binding: RecyclerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: Note){
+        fun bind(note: Note) {
             headerView.text = note.header
             dateView.text = note.date
         }
+
         val dateView: TextView = binding.date
         val headerView: TextView = binding.title
     }

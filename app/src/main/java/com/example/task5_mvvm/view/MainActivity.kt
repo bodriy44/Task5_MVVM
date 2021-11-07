@@ -27,11 +27,12 @@ class MainActivity : FragmentActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.buttonAbout.setOnClickListener { v: View? ->
-            AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
+        binding = ActivityMainBinding.inflate(layoutInflater).apply {
+            buttonAbout.setOnClickListener { v: View? ->
+                AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
+            }
         }
+        setContentView(binding.root)
         setNoteSizeObserver()
         setCurrentNoteObserver()
         setCreateNoteObserver()
@@ -40,9 +41,11 @@ class MainActivity : FragmentActivity(), MainView {
     }
 
     override fun initViewModel() {
-        vm = ViewModelProvider(this, MainViewModelFactory(MainModel.getRepository(AppDatabase.getDatabase(this)))).get(
-            MainViewModel::class.java
-        )
+        vm = ViewModelProvider(
+            this,
+            MainViewModelFactory(MainModel.getRepository(AppDatabase.getDatabase(this)))
+        ).get(MainViewModel::class.java)
+
         lifecycleScope.launch {
             vm.initVM()
         }
@@ -60,8 +63,8 @@ class MainActivity : FragmentActivity(), MainView {
             .commit()
     }
 
-    override fun setNoteSizeObserver(){
-        vm.noteCount.observe(this){
+    override fun setNoteSizeObserver() {
+        vm.noteCount.observe(this) {
             showRecycler()
         }
     }
@@ -72,7 +75,7 @@ class MainActivity : FragmentActivity(), MainView {
         }
     }
 
-    override fun showNote(){
+    override fun showNote() {
         vm.changeCurrentNote()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, noteFragment)

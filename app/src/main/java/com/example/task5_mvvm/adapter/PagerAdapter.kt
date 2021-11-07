@@ -14,8 +14,14 @@ import com.example.task5_mvvm.view.fragment.PagerFragment
  * @property notes список заметок
  */
 
-class PagerAdapter(fragment: Fragment, var positionOffset: Int, var size: Int, var notes: MutableList<Note>) : FragmentStateAdapter(fragment) {
+class PagerAdapter(
+    fragment: Fragment,
+    var positionOffset: Int,
+    var size: Int,
+    var notes: MutableList<Note>
+) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = size
 
-    override fun createFragment(position: Int) = PagerFragment(notes[(position + positionOffset) % size])
+    override fun createFragment(position: Int) =
+        PagerFragment(notes[(position + positionOffset) % size])
 }

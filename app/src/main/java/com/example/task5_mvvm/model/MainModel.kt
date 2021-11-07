@@ -11,7 +11,7 @@ import java.util.*
  * @property notes список заметок
  */
 
-open class MainModel(var db: AppDatabase): IMainModel {
+open class MainModel(var db: AppDatabase) : IMainModel {
     override var notes: MutableList<Note> = ArrayList()
 
     override fun getIndexNote(note: Note) = notes.indexOf(note)

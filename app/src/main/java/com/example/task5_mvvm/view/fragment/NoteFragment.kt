@@ -40,7 +40,9 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm = ViewModelProvider(requireActivity(), MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
+        vm = ViewModelProvider(
+            requireActivity(),
+            MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
         ).get(MainViewModel::class.java)
     }
 
@@ -56,18 +58,25 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
     override fun onStart() {
         super.onStart()
 
-        binding.floatingActionButtonDelete.setOnClickListener { v: View? ->
-            deleteNote(vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size])
+        with(binding) {
+            floatingActionButtonDelete.setOnClickListener { v: View? ->
+                deleteNote(vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size])
+            }
+            floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
         }
-        binding.floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
         initViewPager()
     }
 
     override fun initViewPager() {
-        adapter = PagerAdapter(this, vm.getIndexNote(vm.getCurrentNote()?:Note("","")), vm.getNotesSize(),  vm.getNotes())
-        viewPager = binding.pager
+        adapter = PagerAdapter(
+            this,
+            vm.getIndexNote(vm.getCurrentNote() ?: Note("", "")),
+            vm.getNotesSize(),
+            vm.getNotes()
+        )
+
+        viewPager = binding.pager.apply { isSaveEnabled = false }
         viewPager.adapter = adapter
-        viewPager.isSaveEnabled = false
     }
 
     override fun onDestroyView() {
@@ -77,17 +86,21 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun shareNote() {
-        val note = vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size]
-        val sendIntent = Intent()
-        with(sendIntent) {
-            action = Intent.ACTION_SEND
-            putExtra(
-                Intent.EXTRA_TEXT,
-                "\n${note.date} ${note.header} ${note.body} Отправлено из приложения MyNote"
+        vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size].let {
+            startActivity(
+                Intent.createChooser(
+                    Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            "\n${it.date} ${it.header} ${it.body} Отправлено из приложения MyNote"
+                        )
+                        type = "text/plain"
+                    },
+                    null
+                )
             )
-            type = "text/plain"
         }
-        startActivity(Intent.createChooser(sendIntent, null))
     }
 
     override fun deleteNote(note: Note) {

@@ -11,6 +11,7 @@ import com.example.task5_mvvm.model.Note
 class PagerFragment(var note: Note) : Fragment() {
     private var _binding: FragmentPagerBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,9 +21,11 @@ class PagerFragment(var note: Note) : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.noteTitle.text = note.header
-        binding.noteDate.text = note.date
-        binding.noteText.text = note.body
+        with(note) {
+            binding.noteTitle.text = header
+            binding.noteDate.text = date
+            binding.noteText.text = body
+        }
     }
 
     override fun onDestroyView() {

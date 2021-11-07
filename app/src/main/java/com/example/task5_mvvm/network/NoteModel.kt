@@ -1,6 +1,6 @@
 package com.example.task5_mvvm.network
 
-data class NoteModel (
+data class NoteModel(
     val body: String,
     val id: Int,
     val title: String,

@@ -22,14 +22,17 @@ import com.example.task5_mvvm.viewmodel.MainViewModelFactory
  * @property binding ViewBinding для элемента NoteCreateFragment
  */
 
-class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.task5_mvvm.view.NoteCreateView {
+class NoteCreateFragment : Fragment(R.layout.fragment_note_create),
+    com.example.task5_mvvm.view.NoteCreateView {
     private var _binding: FragmentNoteCreateBinding? = null
     private val binding get() = _binding!!
     private lateinit var vm: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm = ViewModelProvider(requireActivity(), MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
+        vm = ViewModelProvider(
+            requireActivity(),
+            MainViewModelFactory(MainModel(AppDatabase.getDatabase(requireActivity())))
         ).get(MainViewModel::class.java)
     }
 
@@ -43,9 +46,11 @@ class NoteCreateFragment : Fragment(R.layout.fragment_note_create), com.example.
 
     override fun onStart() {
         super.onStart()
-        binding.saveButton.setOnClickListener { v: View? -> addNote() }
-        binding.editTextTitle.setText("")
-        binding.editTextText.setText("")
+        binding.apply {
+            saveButton.setOnClickListener { v: View? -> addNote() }
+            editTextTitle.setText("")
+            editTextText.setText("")
+        }
     }
 
     override fun onDestroyView() {
