@@ -1,7 +1,12 @@
 package com.example.task5_mvvm.view
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -37,7 +42,7 @@ class MainActivity : FragmentActivity(), MainView {
                 AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
             }
             buttonWorkmanager.setOnClickListener { v: View? ->
-                initWorker()
+                vm.initWorker()
             }
         }
 
@@ -46,7 +51,23 @@ class MainActivity : FragmentActivity(), MainView {
         setCurrentNoteObserver()
         setCreateNoteObserver()
         initFragments()
+        setSearchTextListener()
         showRecycler()
+    }
+
+    override fun setSearchTextListener(){
+        val searchView = binding.searchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                recyclerViewFragment.initAdapter(vm.searchNotes(query))
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                recyclerViewFragment.initAdapter(vm.searchNotes(newText))
+                return false
+            }
+        })
     }
 
     override fun initViewModel() {
@@ -103,13 +124,5 @@ class MainActivity : FragmentActivity(), MainView {
             .replace(R.id.fragmentContainerView, noteCreateFragment)
             .addToBackStack(null)
             .commit()
-    }
-
-    private fun initWorker(){
-        WorkManager.getInstance().enqueue(
-            PeriodicWorkRequest.Builder(
-            BackupWorker::class.java, 30,
-            TimeUnit.MINUTES
-        ).build());
     }
 }

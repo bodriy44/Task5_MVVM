@@ -15,6 +15,11 @@
         app:title="@string/my_note"
         app:titleTextColor="@color/white">
 
+        <SearchView
+            android:id="@+id/search_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/button_about"
             android:layout_width="wrap_content"

@@ -5,17 +5,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.example.task5_mvvm.model.IMainModel
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.network.APIService
 import com.example.task5_mvvm.network.NoteModel
 import com.example.task5_mvvm.utils.SingleLiveEvent
+import com.example.task5_mvvm.workmanager.BackupWorker
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  *
@@ -32,7 +36,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
 
     private var _noteCount = MutableLiveData<Int>()
     private var _noteIndex = MutableLiveData<Int>()
-    private var _notes = MutableLiveData<ArrayList<Note>>()
+    private var _notes = MutableLiveData<MutableList<Note>>()
     private var _currentNote = MutableLiveData<Note>()
     private val api = Retrofit.Builder()
         .baseUrl("https://jsonplaceholder.typicode.com")
@@ -42,7 +46,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
 
     var noteIndex: LiveData<Int> = _noteIndex
     var noteCount: LiveData<Int> = _noteCount
-    var notes: LiveData<ArrayList<Note>> = _notes
+    var notes: LiveData<MutableList<Note>> = _notes
     var currentNote: LiveData<Note> = _currentNote
 
     val onSuccessSaveNote = SingleLiveEvent<Unit>()
@@ -83,7 +87,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
 
     fun changeCurrentNote() {
         if (noteIndex.value != -1 && noteIndex.value != null) {
-            _currentNote.value = getNote(noteIndex.value!!)
+            _currentNote.value = _notes.value!!.get(noteIndex.value!!)
             onSuccessChangeNote.call()
         } else {
             onErrorChangeNote.call()
@@ -91,6 +95,10 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
     }
 
     fun getCurrentNote() = _currentNote.value
+
+    fun setCurrentNote(note: Note){
+        _currentNote.value = note
+    }
 
     suspend fun deleteNote(note: Note) {
         repository.deleteNote(note)
@@ -111,7 +119,25 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
         })
     }
 
+    fun searchNotes(str: String): MutableList<Note>{
+        val newNotes = mutableListOf<Note>()
+        for(note in getNotes()){
+            if(note.header.contains(str))
+                newNotes.add(note)
+        }
+        _notes.value = newNotes
+        return newNotes
+    }
+
     fun setCurrentNoteIndex(index: Int) {
         _noteIndex.value = index
+    }
+
+    fun initWorker(){
+        WorkManager.getInstance().enqueue(
+            PeriodicWorkRequest.Builder(
+                BackupWorker::class.java, 30,
+                TimeUnit.MINUTES
+            ).build());
     }
 }

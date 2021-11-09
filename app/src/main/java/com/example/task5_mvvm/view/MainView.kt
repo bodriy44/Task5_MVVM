@@ -9,4 +9,5 @@ interface MainView {
     fun setCreateNoteObserver()
     fun setNoteSizeObserver()
     fun initViewModel()
+    fun setSearchTextListener()
 }
