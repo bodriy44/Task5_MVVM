@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.databinding.ActivityMainBinding
 import com.example.task5_mvvm.model.MainModel
@@ -15,7 +17,10 @@ import com.example.task5_mvvm.view.fragment.NoteFragment
 import com.example.task5_mvvm.view.fragment.RecyclerViewFragment
 import com.example.task5_mvvm.viewmodel.MainViewModel
 import com.example.task5_mvvm.viewmodel.MainViewModelFactory
+import com.example.task5_mvvm.workmanager.BackupWorker
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
+
 
 class MainActivity : FragmentActivity(), MainView {
     private lateinit var vm: MainViewModel
@@ -31,7 +36,11 @@ class MainActivity : FragmentActivity(), MainView {
             buttonAbout.setOnClickListener { v: View? ->
                 AboutDialogFragment().show(supportFragmentManager.beginTransaction(), "dialog")
             }
+            buttonWorkmanager.setOnClickListener { v: View? ->
+                initWorker()
+            }
         }
+
         setContentView(binding.root)
         setNoteSizeObserver()
         setCurrentNoteObserver()
@@ -94,5 +103,13 @@ class MainActivity : FragmentActivity(), MainView {
             .replace(R.id.fragmentContainerView, noteCreateFragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun initWorker(){
+        WorkManager.getInstance().enqueue(
+            PeriodicWorkRequest.Builder(
+            BackupWorker::class.java, 30,
+            TimeUnit.MINUTES
+        ).build());
     }
 }
