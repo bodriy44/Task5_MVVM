@@ -11,7 +11,6 @@ import com.example.task5_mvvm.view.fragment.PagerFragment
  *
  * @property positionOffset позиция выбранной в RecyclerView заметки, необходимая для смещения
  * @property size размер списка заметок
- * @property notes список заметок
  */
 
 class PagerAdapter(

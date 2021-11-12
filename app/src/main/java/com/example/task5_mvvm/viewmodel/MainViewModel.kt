@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.example.task5_mvvm.constants.BACKUP_WORKER_REPEAT_INTERVAL
+import com.example.task5_mvvm.constants.BASE_URL
 import com.example.task5_mvvm.model.IMainModel
 import com.example.task5_mvvm.model.Note
 import com.example.task5_mvvm.network.APIService
@@ -39,7 +41,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
     private var _notes = MutableLiveData<MutableList<Note>>()
     private var _currentNote = MutableLiveData<Note>()
     private val api = Retrofit.Builder()
-        .baseUrl("https://jsonplaceholder.typicode.com")
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(APIService::class.java)
@@ -87,7 +89,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
 
     fun changeCurrentNote() {
         if (noteIndex.value != -1 && noteIndex.value != null) {
-            _currentNote.value = _notes.value!!.get(noteIndex.value!!)
+            _currentNote.value = _notes.value?.get(noteIndex.value ?: 0)
             onSuccessChangeNote.call()
         } else {
             onErrorChangeNote.call()
@@ -110,7 +112,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
     fun downloadNote() {
         api.getNote().enqueue(object : Callback<NoteModel> {
             override fun onResponse(call: Call<NoteModel>, response: Response<NoteModel>) {
-                addNote(Note(response.body()!!.title, response.body()!!.body))
+                addNote(Note(response.body()?.title ?: "", response.body()?.body ?: ""))
             }
 
             override fun onFailure(call: Call<NoteModel>, t: Throwable?) {
@@ -136,7 +138,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
     fun initWorker(){
         WorkManager.getInstance().enqueue(
             PeriodicWorkRequest.Builder(
-                BackupWorker::class.java, 30,
+                BackupWorker::class.java, BACKUP_WORKER_REPEAT_INTERVAL,
                 TimeUnit.MINUTES
             ).build());
     }

@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.task5_mvvm.R
 import com.example.task5_mvvm.adapter.PagerAdapter
+import com.example.task5_mvvm.constants.SENDER_INFO
 import com.example.task5_mvvm.databinding.FragmentNoteBinding
 import com.example.task5_mvvm.model.MainModel
 import com.example.task5_mvvm.model.Note
@@ -26,17 +27,15 @@ import kotlinx.coroutines.launch
  *
  * Класс фрагмента, необходимого для вывода данных кнкретной заметки на экран
  *
- * @property adapter адаптер для ViewPager
  * @property binding ViewBinding для элемента NoteFragment
  *
  */
 
 class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
     private lateinit var adapter: PagerAdapter
-    private lateinit var viewPager: ViewPager2
+    private var viewPager: ViewPager2? = null
     private lateinit var vm: MainViewModel
-    private var _binding: FragmentNoteBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentNoteBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +48,9 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNoteBinding.inflate(layoutInflater)
-        return binding.root
+    ): View? {
+        binding = FragmentNoteBinding.inflate(layoutInflater)
+        return binding?.root
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -59,10 +58,10 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
         super.onStart()
 
         with(binding) {
-            floatingActionButtonDelete.setOnClickListener { v: View? ->
-                deleteNote(vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size])
+            this?.floatingActionButtonDelete?.setOnClickListener { v: View? ->
+                deleteNote(vm.getNotes()[(viewPager?.currentItem ?: 0 + adapter.positionOffset) % adapter.size])
             }
-            floatingActionButtonShare.setOnClickListener { v: View? -> shareNote() }
+            this?.floatingActionButtonShare?.setOnClickListener { v: View? -> shareNote() }
         }
         initViewPager()
     }
@@ -75,25 +74,27 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
             vm.getNotes()
         )
 
-        viewPager = binding.pager.apply { isSaveEnabled = false }
-        viewPager.adapter = adapter
+        viewPager = binding?.pager?.apply { isSaveEnabled = false }
+        viewPager?.let {
+            it.adapter = adapter
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun shareNote() {
-        vm.getNotes()[(viewPager.currentItem + adapter.positionOffset) % adapter.size].let {
+        vm.getNotes()[(viewPager?.currentItem ?: 0 + adapter.positionOffset) % adapter.size].let {
             startActivity(
                 Intent.createChooser(
                     Intent().apply {
                         action = Intent.ACTION_SEND
                         putExtra(
                             Intent.EXTRA_TEXT,
-                            "\n${it.date} ${it.header} ${it.body} Отправлено из приложения MyNote"
+                            "\n${it.date} ${it.header} ${it.body} $SENDER_INFO"
                         )
                         type = "text/plain"
                     },

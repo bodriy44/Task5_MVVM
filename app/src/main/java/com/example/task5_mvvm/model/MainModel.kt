@@ -8,7 +8,6 @@ import java.util.*
  * Класс для взаимодействия с данными являющийся синглтоном
  *
  * @property db база данных приложения
- * @property notes список заметок
  */
 
 open class MainModel(var db: AppDatabase) : IMainModel {

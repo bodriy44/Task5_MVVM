@@ -20,8 +20,7 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler),
     com.example.task5_mvvm.view.RecyclerView,
     OnNoteClickListener {
     private lateinit var adapter: NoteAdapter
-    private var _binding: FragmentRecyclerBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentRecyclerBinding? = null
     private lateinit var vm: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,18 +34,20 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentRecyclerBinding.inflate(layoutInflater).apply {
+    ): View? {
+        binding = FragmentRecyclerBinding.inflate(layoutInflater).apply {
             floatingActionButtonAddNote.setOnClickListener { v: View? -> createNote() }
             floatingActionButtonDownloadNote.setOnClickListener { v: View? -> handleDownloadButtonClick() }
         }
         initRecycler()
-        return binding.root
+        return binding?.root
     }
 
     override fun initRecycler() {
         adapter = NoteAdapter(this)
-        binding.recyclerView.adapter = adapter
+        binding?.let{
+            it.recyclerView.adapter = adapter
+        }
     }
 
     override fun onStart() {
@@ -58,7 +59,7 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler),
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 
     override fun createNote() {

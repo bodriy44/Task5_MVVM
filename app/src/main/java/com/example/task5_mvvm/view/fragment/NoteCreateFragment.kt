@@ -24,8 +24,7 @@ import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 
 class NoteCreateFragment : Fragment(R.layout.fragment_note_create),
     com.example.task5_mvvm.view.NoteCreateView {
-    private var _binding: FragmentNoteCreateBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentNoteCreateBinding? = null
     private lateinit var vm: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,14 +38,14 @@ class NoteCreateFragment : Fragment(R.layout.fragment_note_create),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNoteCreateBinding.inflate(layoutInflater)
-        return binding.root
+    ): View? {
+        binding = FragmentNoteCreateBinding.inflate(layoutInflater)
+        return binding?.root
     }
 
     override fun onStart() {
         super.onStart()
-        binding.apply {
+        binding?.apply {
             saveButton.setOnClickListener { v: View? -> addNote() }
             editTextTitle.setText("")
             editTextText.setText("")
@@ -55,7 +54,7 @@ class NoteCreateFragment : Fragment(R.layout.fragment_note_create),
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 
     override fun addNote() {
@@ -64,8 +63,8 @@ class NoteCreateFragment : Fragment(R.layout.fragment_note_create),
 
     val note: Note
         get() = Note(
-            binding.editTextTitle.text.toString(),
-            binding.editTextText.text.toString(),
+            binding?.editTextTitle?.text.toString(),
+            binding?.editTextText?.text.toString(),
             DateFormat.getDateFormat(context).toString(),
         )
 }

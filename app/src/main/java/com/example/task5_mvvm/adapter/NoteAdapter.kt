@@ -15,7 +15,6 @@ import java.util.*
  * Данный класс является адаптером для RecyclerView
  *
  * @property onNoteClickListener обработчик события нажатия на заметку.
- * @property notes список заметок
  * @property binding ViewBinding для элемента RecyclerView
  */
 
