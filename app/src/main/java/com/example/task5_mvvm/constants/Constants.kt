@@ -10,3 +10,4 @@ const val BACKUP_WORKER_START = "doWork start"
 const val BACKUP_WORKER_END = "doWork end"
 const val BACKUP_WORKER_SUCCESS = "SUCCESS"
 const val ACCESS_FINE_LOCATION_REQUEST_CODE = 101
+const val DEF_STYLE_RES = 0

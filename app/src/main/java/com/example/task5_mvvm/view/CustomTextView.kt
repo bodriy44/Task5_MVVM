@@ -5,6 +5,7 @@ import android.text.Html
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import com.example.task5_mvvm.R
+import com.example.task5_mvvm.constants.DEF_STYLE_RES
 
 /**
  *
@@ -18,7 +19,7 @@ import com.example.task5_mvvm.R
 class CustomTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = DEF_STYLE_RES
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
 
     var htmlText: String? = null
@@ -34,7 +35,7 @@ class CustomTextView @JvmOverloads constructor(
             attrs,
             R.styleable.CustomTextView,
             defStyleAttr,
-            0
+            DEF_STYLE_RES
         ).also { typedArray ->
             htmlText = typedArray.getString(R.styleable.CustomTextView_htmlText)
         }.recycle()
