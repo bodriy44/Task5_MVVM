@@ -18,4 +18,5 @@
     <string name="base_url" translatable="false">https://jsonplaceholder.typicode.com</string>
     <string name="get_location">Получить текущее местоположение</string>
     <string name="google_url">https://www.google.ru/</string>
+    <string name="html_code" translatable="false"><![CDATA[<h2>Это html код отображенный в CustomTextView</h2><p>Это параграф отображенный в CustomTextView</p>]]></string>
 </resources>

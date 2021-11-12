@@ -29,6 +29,7 @@ class MainActivity : FragmentActivity(), MainView {
     private lateinit var vm: MainViewModel
     private lateinit var recyclerViewFragment: RecyclerViewFragment
     private lateinit var webViewFragment: WebFragment
+    private lateinit var animatedHtmlFragment: AnimatedHtmlFragment
     private lateinit var noteFragment: NoteFragment
     private lateinit var noteCreateFragment: NoteCreateFragment
     private lateinit var binding: ActivityMainBinding
@@ -45,6 +46,9 @@ class MainActivity : FragmentActivity(), MainView {
             }
             buttonWebview.setOnClickListener { v: View? ->
                 showWebView()
+            }
+            buttonCustomTextview.setOnClickListener { v: View? ->
+                showCustomTextView()
             }
         }
 
@@ -88,6 +92,7 @@ class MainActivity : FragmentActivity(), MainView {
         noteFragment = NoteFragment()
         recyclerViewFragment = RecyclerViewFragment()
         webViewFragment = WebFragment()
+        animatedHtmlFragment = AnimatedHtmlFragment()
     }
 
     override fun showRecycler() {
@@ -99,6 +104,13 @@ class MainActivity : FragmentActivity(), MainView {
     fun showWebView(){
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, webViewFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    fun showCustomTextView(){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, animatedHtmlFragment)
             .addToBackStack(null)
             .commit()
     }
