@@ -17,4 +17,5 @@
     <string name="about_dialog_message">Перейти на страницу информации о приложении?</string>
     <string name="base_url" translatable="false">https://jsonplaceholder.typicode.com</string>
     <string name="get_location">Получить текущее местоположение</string>
+    <string name="google_url">https://www.google.ru/</string>
 </resources>

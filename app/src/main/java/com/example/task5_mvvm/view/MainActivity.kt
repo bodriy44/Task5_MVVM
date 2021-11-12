@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.webkit.WebView
 import android.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.FragmentActivity
@@ -16,10 +17,7 @@ import com.example.task5_mvvm.R
 import com.example.task5_mvvm.databinding.ActivityMainBinding
 import com.example.task5_mvvm.model.MainModel
 import com.example.task5_mvvm.model.database.AppDatabase
-import com.example.task5_mvvm.view.fragment.AboutDialogFragment
-import com.example.task5_mvvm.view.fragment.NoteCreateFragment
-import com.example.task5_mvvm.view.fragment.NoteFragment
-import com.example.task5_mvvm.view.fragment.RecyclerViewFragment
+import com.example.task5_mvvm.view.fragment.*
 import com.example.task5_mvvm.viewmodel.MainViewModel
 import com.example.task5_mvvm.viewmodel.MainViewModelFactory
 import com.example.task5_mvvm.workmanager.BackupWorker
@@ -30,6 +28,7 @@ import java.util.concurrent.TimeUnit
 class MainActivity : FragmentActivity(), MainView {
     private lateinit var vm: MainViewModel
     private lateinit var recyclerViewFragment: RecyclerViewFragment
+    private lateinit var webViewFragment: WebFragment
     private lateinit var noteFragment: NoteFragment
     private lateinit var noteCreateFragment: NoteCreateFragment
     private lateinit var binding: ActivityMainBinding
@@ -43,6 +42,9 @@ class MainActivity : FragmentActivity(), MainView {
             }
             buttonWorkmanager.setOnClickListener { v: View? ->
                 vm.initWorker()
+            }
+            buttonWebview.setOnClickListener { v: View? ->
+                showWebView()
             }
         }
 
@@ -85,11 +87,19 @@ class MainActivity : FragmentActivity(), MainView {
         noteCreateFragment = NoteCreateFragment()
         noteFragment = NoteFragment()
         recyclerViewFragment = RecyclerViewFragment()
+        webViewFragment = WebFragment()
     }
 
     override fun showRecycler() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, recyclerViewFragment)
+            .commit()
+    }
+
+    fun showWebView(){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, webViewFragment)
+            .addToBackStack(null)
             .commit()
     }
 
