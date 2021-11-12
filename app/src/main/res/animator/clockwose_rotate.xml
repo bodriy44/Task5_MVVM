@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <rotate
+        android:fromDegrees="@dimen/clockwise_rotate_from_degree"
+        android:toDegrees="@dimen/clockwise_rotate_to_degree"
+        android:pivotX="@dimen/clockwise_rotate_pivot"
+        android:pivotY="@dimen/clockwise_rotate_pivot"
+        android:duration="@dimen/clockwise_rotate_duration"
+        android:repeatCount="@dimen/clockwise_rotate_repeat_count"
+        android:repeatMode="@dimen/clockwise_rotate_repeat_mode"
+        />
+</set>
