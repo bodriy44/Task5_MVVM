@@ -12,5 +12,6 @@
     <dimen name="recycler_item_text_size">14sp</dimen>
     <dimen name="app_compat_padding">8dp</dimen>
     <dimen name="recycler_layout_height">588dp</dimen>
+    <dimen name="locationButtonMarginBottom">300dp</dimen>
 
 </resources>

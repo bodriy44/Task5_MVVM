@@ -14,4 +14,13 @@
         android:text='@string/about_info'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/locationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/get_location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutInfo"
+        android:layout_marginBottom="@dimen/locationButtonMarginBottom"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
