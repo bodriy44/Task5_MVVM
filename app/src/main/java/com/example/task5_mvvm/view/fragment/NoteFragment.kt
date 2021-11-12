@@ -59,7 +59,10 @@ class NoteFragment : Fragment(R.layout.fragment_note), NoteView {
 
         with(binding) {
             this?.floatingActionButtonDelete?.setOnClickListener { v: View? ->
-                deleteNote(vm.getNotes()[(viewPager?.currentItem ?: 0 + adapter.positionOffset) % adapter.size])
+                deleteNote(
+                    vm.getNotes()[(viewPager?.currentItem
+                        ?: 0 + adapter.positionOffset) % adapter.size]
+                )
             }
             this?.floatingActionButtonShare?.setOnClickListener { v: View? -> shareNote() }
         }

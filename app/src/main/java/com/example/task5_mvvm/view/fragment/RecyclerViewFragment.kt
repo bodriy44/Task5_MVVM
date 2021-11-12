@@ -45,7 +45,7 @@ class RecyclerViewFragment : Fragment(R.layout.fragment_recycler),
 
     override fun initRecycler() {
         adapter = NoteAdapter(this)
-        binding?.let{
+        binding?.let {
             it.recyclerView.adapter = adapter
         }
     }

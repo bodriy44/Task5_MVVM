@@ -16,7 +16,9 @@ import java.util.concurrent.TimeUnit
  * В данном случае вывод текста в LOG
  *
  */
-class BackupWorker(context: Context, workerParameters: WorkerParameters): Worker(context, workerParameters) {
+
+class BackupWorker(context: Context, workerParameters: WorkerParameters) :
+    Worker(context, workerParameters) {
 
     override fun doWork(): Result {
 
@@ -24,7 +26,7 @@ class BackupWorker(context: Context, workerParameters: WorkerParameters): Worker
         try {
             TimeUnit.SECONDS.sleep(BACKUP_WORKER_SLEEP_TIME);
             Log.d(TAG, BACKUP_WORKER_SUCCESS)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d(TAG, e.message.toString())
             return Result.failure()
         }

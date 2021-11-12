@@ -55,7 +55,7 @@ class MainActivity : FragmentActivity(), MainView {
         showRecycler()
     }
 
-    override fun setSearchTextListener(){
+    override fun setSearchTextListener() {
         val searchView = binding.searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {

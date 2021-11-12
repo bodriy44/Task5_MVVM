@@ -98,7 +98,7 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
 
     fun getCurrentNote() = _currentNote.value
 
-    fun setCurrentNote(note: Note){
+    fun setCurrentNote(note: Note) {
         _currentNote.value = note
     }
 
@@ -121,10 +121,10 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
         })
     }
 
-    fun searchNotes(str: String): MutableList<Note>{
+    fun searchNotes(str: String): MutableList<Note> {
         val newNotes = mutableListOf<Note>()
-        for(note in getNotes()){
-            if(note.header.contains(str))
+        for (note in getNotes()) {
+            if (note.header.contains(str))
                 newNotes.add(note)
         }
         _notes.value = newNotes
@@ -135,11 +135,12 @@ class MainViewModel(private var repository: IMainModel) : ViewModel() {
         _noteIndex.value = index
     }
 
-    fun initWorker(){
+    fun initWorker() {
         WorkManager.getInstance().enqueue(
             PeriodicWorkRequest.Builder(
                 BackupWorker::class.java, BACKUP_WORKER_REPEAT_INTERVAL,
                 TimeUnit.MINUTES
-            ).build());
+            ).build()
+        )
     }
 }
