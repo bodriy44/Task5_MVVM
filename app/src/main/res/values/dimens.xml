@@ -13,11 +13,5 @@
     <dimen name="app_compat_padding">8dp</dimen>
     <dimen name="recycler_layout_height">588dp</dimen>
     <dimen name="locationButtonMarginBottom">300dp</dimen>
-    <dimen name="clockwise_rotate_pivot">50%</dimen>
-    <dimen name="clockwise_rotate_to_degree">360</dimen>
-    <dimen name="clockwise_rotate_from_degree">0</dimen>
-    <dimen name="clockwise_rotate_duration">1000</dimen>
-    <dimen name="clockwise_rotate_repeat_count">3</dimen>
-    <dimen name="clockwise_rotate_repeat_mode">restart</dimen>
 
 </resources>

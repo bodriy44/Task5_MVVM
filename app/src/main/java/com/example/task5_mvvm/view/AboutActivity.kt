@@ -29,21 +29,8 @@ class AboutActivity : AppCompatActivity() {
     }
 
     private fun fetchLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                ACCESS_FINE_LOCATION_REQUEST_CODE
-            )
+        if (checkPermissionsNotGranted()) {
+            requestPermissions()
             return
         }
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
@@ -56,4 +43,21 @@ class AboutActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun requestPermissions(){
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            ACCESS_FINE_LOCATION_REQUEST_CODE
+        )
+    }
+
+    private fun checkPermissionsNotGranted() = (ActivityCompat.checkSelfPermission(
+        this,
+        android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(
+        this,
+        android.Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED)
 }

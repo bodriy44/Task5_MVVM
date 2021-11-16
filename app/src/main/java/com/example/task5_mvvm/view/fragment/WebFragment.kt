@@ -11,7 +11,6 @@ import com.example.task5_mvvm.R
 import com.example.task5_mvvm.databinding.FragmentWebViewBinding
 
 class WebFragment : Fragment(R.layout.fragment_web_view) {
-    private var myWebView: WebView? = null
     private var binding: FragmentWebViewBinding? = null
 
     override fun onCreateView(
@@ -29,14 +28,13 @@ class WebFragment : Fragment(R.layout.fragment_web_view) {
     }
 
     fun initWebView() {
-        myWebView = binding?.webView
-
-        myWebView?.settings?.apply {
-            javaScriptEnabled = true
-            loadsImagesAutomatically = true
+        binding?.webView?.apply{
+            settings.apply {
+                javaScriptEnabled = true
+                loadsImagesAutomatically = true
+            }
+            webViewClient = WebViewClient()
+            loadUrl(getString(R.string.google_url))
         }
-
-        myWebView?.webViewClient = WebViewClient()
-        myWebView?.loadUrl(getString(R.string.google_url))
     }
 }

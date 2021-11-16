@@ -12,7 +12,6 @@
     <string name="about_dialog_neg_but">No</string>
     <string name="about_dialog_pos_but">Yes</string>
     <string name="about_dialog_exception">Activity cannot be null</string>
-    <string name="google_url">https://www.google.ru/</string>
     <string name="get_location">get current location</string>
     <string name="clockwise">rotate</string>
 </resources>

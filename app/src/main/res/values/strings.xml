@@ -18,6 +18,12 @@
     <string name="base_url" translatable="false">https://jsonplaceholder.typicode.com</string>
     <string name="get_location">Получить текущее местоположение</string>
     <string name="clockwise">Вращать</string>
-    <string name="google_url">https://www.google.ru/</string>
+    <string name="google_url" translatable="false">https://www.google.ru/</string>
     <string name="html_code" translatable="false"><![CDATA[<h2>Это html код отображенный в CustomTextView</h2><p>Это параграф отображенный в CustomTextView</p>]]></string>
+    <string name="clockwise_rotate_pivot" translatable="false">50%</string>
+    <string name="clockwise_rotate_to_degree" translatable="false">360</string>
+    <string name="clockwise_rotate_from_degree" translatable="false">0</string>
+    <string name="clockwise_rotate_duration" translatable="false">1000</string>
+    <string name="clockwise_rotate_repeat_count" translatable="false">3</string>
+    <string name="clockwise_rotate_repeat_mode" translatable="false">restart</string>
 </resources>
